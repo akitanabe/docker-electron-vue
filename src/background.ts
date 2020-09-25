@@ -2,8 +2,17 @@
 
 import { app, protocol, BrowserWindow } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
-import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
+import installExtension, {
+  ExtensionReference,
+} from 'electron-devtools-installer';
 const isDevelopment = process.env.NODE_ENV !== 'production';
+
+// Vue.js DevTools yet support 3.0
+// use beta version
+const VUEJS_DEVTOOLS_BETA: ExtensionReference = {
+  id: 'ljjemllljcmogpfapbkkighbhhppjdbg',
+  electron: '>=1.2.1',
+};
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -14,7 +23,7 @@ protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } },
 ]);
 
-function createWindow() {
+async function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
     width: 800,
@@ -29,7 +38,7 @@ function createWindow() {
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
-    win.loadURL(process.env.WEBPACK_DEV_SERVER_URL as string);
+    await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL as string);
     if (!process.env.IS_TEST) win.webContents.openDevTools();
   } else {
     createProtocol('app');
@@ -66,7 +75,7 @@ app.on('ready', async () => {
   if (isDevelopment && !process.env.IS_TEST) {
     // Install Vue Devtools
     try {
-      await installExtension(VUEJS_DEVTOOLS);
+      await installExtension(VUEJS_DEVTOOLS_BETA);
     } catch (e) {
       console.error('Vue Devtools failed to install:', e.toString());
     }
