@@ -6,6 +6,9 @@ import installExtension, {
   ExtensionReference,
 } from 'electron-devtools-installer';
 const isDevelopment = process.env.NODE_ENV !== 'production';
+import sqlite3 from 'sqlite3';
+
+const db = new sqlite3.Database('db.sqlite3');
 
 // Vue.js DevTools yet support 3.0
 // use beta version
