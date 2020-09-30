@@ -6,9 +6,7 @@ import installExtension, {
   ExtensionReference,
 } from 'electron-devtools-installer';
 const isDevelopment = process.env.NODE_ENV !== 'production';
-import sqlite3 from 'sqlite3';
-
-const db = new sqlite3.Database('db.sqlite3');
+import dbconnect from '@/utils/dbconnect';
 
 // Vue.js DevTools yet support 3.0
 // use beta version
@@ -25,6 +23,18 @@ let win: BrowserWindow | null;
 protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } },
 ]);
+
+async function initialize(): Promise<void> {
+  try {
+    const connection = await dbconnect();
+
+    await connection.synchronize();
+
+    connection.close();
+  } catch (e) {
+    console.error('sqlite database has error:', e.toString());
+  }
+}
 
 async function createWindow() {
   // Create the browser window.
@@ -83,6 +93,8 @@ app.on('ready', async () => {
       console.error('Vue Devtools failed to install:', e.toString());
     }
   }
+
+  await initialize();
   createWindow();
 });
 
