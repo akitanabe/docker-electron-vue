@@ -25,15 +25,11 @@ protocol.registerSchemesAsPrivileged([
 ]);
 
 async function initialize(): Promise<void> {
-  try {
-    const connection = await dbconnect();
+  const connection = await dbconnect();
 
-    await connection.synchronize();
+  await connection.synchronize();
 
-    connection.close();
-  } catch (e) {
-    console.error('sqlite database has error:', e.toString());
-  }
+  connection.close();
 }
 
 async function createWindow() {
@@ -94,8 +90,12 @@ app.on('ready', async () => {
     }
   }
 
-  await initialize();
-  createWindow();
+  try {
+    await initialize();
+    createWindow();
+  } catch (e) {
+    console.error(e.toString());
+  }
 });
 
 // Exit cleanly on request from parent process in development mode.
