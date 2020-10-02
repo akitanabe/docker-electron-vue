@@ -6,7 +6,7 @@ import installExtension, {
   ExtensionReference,
 } from 'electron-devtools-installer';
 const isDevelopment = process.env.NODE_ENV !== 'production';
-import dbconnect from '@/utils/dbconnect';
+import dbconnect from '@/helpers/dbconnect';
 
 // Vue.js DevTools yet support 3.0
 // use beta version
