@@ -6,7 +6,8 @@ import installExtension, {
   ExtensionReference,
 } from 'electron-devtools-installer';
 const isDevelopment = process.env.NODE_ENV !== 'production';
-import dbconnect from '@/helpers/dbconnect';
+import Database from '@/helpers/database';
+import ormconfig from '@/ormconfig';
 
 // Vue.js DevTools yet support 3.0
 // use beta version
@@ -25,11 +26,11 @@ protocol.registerSchemesAsPrivileged([
 ]);
 
 async function initialize(): Promise<void> {
-  const connection = await dbconnect();
+  const database = await Database.factory(ormconfig);
 
-  await connection.synchronize();
+  await database.connection?.synchronize();
 
-  connection.close();
+  await database.connection?.close();
 }
 
 async function createWindow() {
