@@ -12,6 +12,9 @@
     "postuninstall": "electron-builder install-app-deps"
   },
   "main": "background.js",
+  "engines": {
+    "node": "14.x"
+  },
   "dependencies": {
     "pluralize": "^8.0.0",
     "reflect-metadata": "^0.1.13",
