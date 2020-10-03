@@ -13,7 +13,7 @@
   },
   "main": "background.js",
   "engines": {
-    "node": ">=12.x"
+    "node": "12.x"
   },
   "dependencies": {
     "pluralize": "^8.0.0",
