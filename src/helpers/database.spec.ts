@@ -17,10 +17,12 @@ const connectionOption: ConnectionOptions = {
 };
 
 describe('helpers/Database', function () {
-  test('Database.open required Entity name', () => {
+  test('Database.open required Entity name', async () => {
     const database = new Database();
 
-    return expect(database.open(connectionOption)).rejects.toThrow();
+    await expect(database.open(connectionOption)).rejects.toThrow();
+
+    return expect(database.connection).toBe(undefined);
   });
 
   afterAll(function () {
