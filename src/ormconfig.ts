@@ -1,5 +1,5 @@
 import { ConnectionOptions } from 'typeorm';
-import { entities } from '@/entity';
+import { entities } from '@/entities';
 import SnakeCaseNamingStrategy from '@/helpers/snake-case-naming-strategy';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
