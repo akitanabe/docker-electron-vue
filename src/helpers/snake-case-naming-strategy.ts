@@ -5,13 +5,13 @@ import { snakeCase } from 'typeorm/util/StringUtils';
 export default class SnakeCaseNamingStrategy
   extends DefaultNamingStrategy
   implements NamingStrategyInterface {
-  tableName(targetName: string, userSpecifiedName: string): string {
+  tableName(targetName: string, userSpecifiedName: string | undefined): string {
     return userSpecifiedName
       ? userSpecifiedName
       : pluralize.plural(snakeCase(targetName));
   }
 
-  columnName(propertyName: string, customName: string): string {
+  columnName(propertyName: string, customName: string | undefined): string {
     return customName ? customName : snakeCase(propertyName);
   }
 
