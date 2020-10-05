@@ -10,7 +10,7 @@ export class User {
   }
 
   @PrimaryGeneratedColumn()
-  readonly userId?: number;
+  readonly id?: number;
 
   @Column()
   firstName: string;
