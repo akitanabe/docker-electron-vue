@@ -15,9 +15,9 @@ export default class Database {
     // 定義されていなければエラーを発生させる
     if (getMetadataArgsStorage().tables.some(({ name }) => !name)) {
       throw new Error('Entity: table name has not defined');
-    } else {
-      this.connection = connection;
     }
+
+    this.connection = connection;
 
     return this;
   }
